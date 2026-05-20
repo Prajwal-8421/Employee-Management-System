@@ -1,0 +1,68 @@
+.table-container {
+  width: 80%;
+  margin: auto;
+  text-align: center;
+}
+
+.Logout{
+  height:40px;
+  width:180px;
+  background-color: black;
+  color:red;
+  margin-top:40px;
+  position:relative;
+  left:400px;
+  font-weight:900
+}
+.addempl{
+  width:180px;
+  position:relative;
+  top:40px;
+  right:400px;
+  font-weight:800;
+  color:rgb(27, 164, 27);
+  background-color: black;
+}
+.addempl:hover{
+  border:2px solid black;
+}
+.emp-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.emp-table th,
+.emp-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+
+.emp-table th {
+  background-color: #333;
+  color: white;
+}
+
+.emp-img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.update-btn {
+  background-color: blue;
+  color: white;
+  padding: 5px 10px;
+  margin-right: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+.delete-btn {
+  background-color: red;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+}
