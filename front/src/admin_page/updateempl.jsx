@@ -1,124 +1,208 @@
 import React, { useEffect, useState } from "react";
-import "./Addempl.css";
-import { updateempl, getemplById, getempl, update } from "../API'S_&_Protection/API";
-import { toast } from "react-toastify";
+import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const UpdateEmployee = () => {
+
   const { id } = useParams();
-  const nav = useNavigate();
+
+  const navigate = useNavigate();
 
   const [name, setname] = useState("");
-  const [role, setrole] = useState("");
-  const [address, setaddress] = useState("");
   const [email, setemail] = useState("");
   const [phone, setphone] = useState("");
-  const [img, setimg] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [address, setaddress] = useState("");
+  const [role, setrole] = useState("");
+  const [file, setfile] = useState(null);
 
   useEffect(() => {
-    const fetchEmployee = async () => {
-      try {
-        const res = await getempl(id);
-        console.log(res.data);
-        setname(res.data.name);
-        setemail(res.data.email);
-        setphone(res.data.phoneno);
-        setaddress(res.data.address);
-        setrole(res.data.role);
+    getEmployee();
+  }, []);
 
-      } catch (err) {
-        console.error(err);
-        toast.error("Failed to load employee");
-      }
-    };
-
-    fetchEmployee();
-  }, [id]);
-
-  const handleUpdate = async (e) => {
-    e.preventDefault();
-    setLoading(true);
+  const getEmployee = async () => {
 
     try {
-      const data = { name, email, phone, address, role };
 
-      const form = new FormData();
-      form.append("req", JSON.stringify(data));
+      const res = await axios.get(
+        `http://localhost:9091/employee/getempl/${id}`
+      );
 
-      if (img) {
-        form.append("file", img);
-      }
+      console.log(res.data);
 
-      await update(id, form);
+      setname(res.data.name);
+      setemail(res.data.email);
+      setphone(res.data.phone);
+      setaddress(res.data.address);
+      setrole(res.data.role);
 
-      toast.success("Employee updated successfully!");
-      nav("/employee/getempls");
+    } catch (err) {
 
-    } catch (error) {
-      console.error(error);
-      toast.error("Error updatin    g employee");
-    } finally {
-      setLoading(false);
+      console.log(err);
+
+      toast.error("Failed to load employee");
+
+    }
+  };
+
+  const handlesubmit = async (e) => {
+
+    e.preventDefault();
+
+    const formData = new FormData();
+
+    formData.append("name", name);
+    formData.append("email", email);
+    formData.append("phone", phone);
+    formData.append("address", address);
+    formData.append("role", role);
+
+    if (file) {
+      formData.append("fi", file);
+    }
+
+    try {
+
+      await axios.put(
+        `http://localhost:9091/employee/update/${id}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        }
+      );
+
+      toast.success("Employee Updated");
+
+      navigate("/employee/getempls");
+
+    } catch (err) {
+
+      console.log(err);
+
+      toast.error("Error updating employee");
+
     }
   };
 
   return (
-    <div className="container">
-      <div className="form-card">
-        <h2>Update Employee</h2>
 
-        <form onSubmit={handleUpdate}>
-          <input
-            type="text"
-            placeholder="Enter Name"
-            value={name}
-            onChange={(e) => setname(e.target.value)}
-            required
-          />
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+        backgroundColor: "#f1f5f9"
+      }}
+    >
 
-          <input
-            type="email"
-            placeholder="Enter Email"
-            value={email}
-            onChange={(e) => setemail(e.target.value)}
-            required
-          />
+      <form
+        onSubmit={handlesubmit}
+        style={{
+          backgroundColor: "white",
+          padding: "40px",
+          borderRadius: "10px",
+          width: "400px",
+          boxShadow: "0px 0px 10px rgba(0,0,0,0.1)"
+        }}
+      >
 
-          <input
-            type="text"
-            placeholder="Enter Phone"
-            value={phone}
-            onChange={(e) => setphone(e.target.value)}
-            required
-          />
+        <h1
+          style={{
+            textAlign: "center",
+            marginBottom: "20px"
+          }}
+        >
+          Update Employee
+        </h1>
 
-          <input
-            type="text"
-            placeholder="Enter Address"
-            value={address}
-            onChange={(e) => setaddress(e.target.value)}
-            required
-          />
+        <input
+          type="text"
+          placeholder="Name"
+          value={name}
+          onChange={(e) => setname(e.target.value)}
+          style={{
+            width: "100%",
+            padding: "12px",
+            marginBottom: "15px"
+          }}
+        />
 
-          <input
-            type="text"
-            placeholder="Enter Role"
-            value={role}
-            onChange={(e) => setrole(e.target.value)}
-            required
-          />
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setemail(e.target.value)}
+          style={{
+            width: "100%",
+            padding: "12px",
+            marginBottom: "15px"
+          }}
+        />
 
-          <input
-            type="file"
-            onChange={(e) => setimg(e.target.files[0])}
-          />
+        <input
+          type="text"
+          placeholder="Phone"
+          value={phone}
+          onChange={(e) => setphone(e.target.value)}
+          style={{
+            width: "100%",
+            padding: "12px",
+            marginBottom: "15px"
+          }}
+        />
 
-          <button type="submit" disabled={loading}>
-            {loading ? "Updating..." : "Update Employee"}
-          </button>
-        </form>
-      </div>
+        <input
+          type="text"
+          placeholder="Address"
+          value={address}
+          onChange={(e) => setaddress(e.target.value)}
+          style={{
+            width: "100%",
+            padding: "12px",
+            marginBottom: "15px"
+          }}
+        />
+
+        <input
+          type="text"
+          placeholder="Role"
+          value={role}
+          onChange={(e) => setrole(e.target.value)}
+          style={{
+            width: "100%",
+            padding: "12px",
+            marginBottom: "15px"
+          }}
+        />
+
+        <input
+          type="file"
+          onChange={(e) => setfile(e.target.files[0])}
+          style={{
+            marginBottom: "20px"
+          }}
+        />
+
+        <button
+          type="submit"
+          style={{
+            width: "100%",
+            padding: "12px",
+            backgroundColor: "#1976d2",
+            color: "white",
+            border: "none",
+            cursor: "pointer",
+            fontSize: "16px"
+          }}
+        >
+          Update Employee
+        </button>
+
+      </form>
+
     </div>
   );
 };
