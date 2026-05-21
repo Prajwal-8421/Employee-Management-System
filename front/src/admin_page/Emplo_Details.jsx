@@ -63,206 +63,90 @@ const EmployeeTable = () => {
   };
 
   return (
-
-    <div
-      style={{
-        padding: "30px",
-        backgroundColor: "#f4f6f9",
-        minHeight: "100vh"
-      }}
-    >
-
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          marginBottom: "20px"
-        }}
-      >
-
-        <button
-          onClick={() => navigate("/addempl")}
-          style={{
-            padding: "12px 25px",
-            backgroundColor: "#000",
-            color: "lime",
-            border: "none",
-            borderRadius: "8px",
-            cursor: "pointer",
-            fontWeight: "bold"
-          }}
-        >
-          + Add Employee
-        </button>
-
-        <button
-          onClick={() => {
+    <div style={{ padding: "2rem", maxWidth: "1200px", margin: "0 auto" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "2rem" }}>
+        <h1 style={{ margin: 0, fontSize: "1.75rem", fontWeight: "700", color: "var(--text-primary)" }}>
+          Employees
+        </h1>
+        <div style={{ display: "flex", gap: "1rem" }}>
+          <button className="btn btn-primary" onClick={() => navigate("/addempl")}>
+            + Add Employee
+          </button>
+          <button className="btn btn-outline" style={{ color: "var(--danger-color)", borderColor: "var(--danger-color)" }} onClick={() => {
             localStorage.removeItem("token");
             toast.success("Logout Successful");
             navigate("/");
-          }}
-          style={{
-            padding: "12px 25px",
-            backgroundColor: "#000",
-            color: "red",
-            border: "none",
-            borderRadius: "8px",
-            cursor: "pointer",
-            fontWeight: "bold"
-          }}
-        >
-          Logout
-        </button>
-
+          }}>
+            Logout
+          </button>
+        </div>
       </div>
 
-      <h1
-        style={{
-          textAlign: "center",
-          marginBottom: "30px",
-          color: "#333"
-        }}
-      >
-        Employee Management System
-      </h1>
-
-      {
-        loading ? (
-
-          <div
-            style={{
-              textAlign: "center",
-              fontSize: "24px",
-              fontWeight: "bold",
-              marginTop: "50px"
-            }}
-          >
-            Loading Employees...
-          </div>
-
-        ) : (
-
-          <table
-            border="1"
-            width="100%"
-            cellPadding="12"
-            style={{
-              borderCollapse: "collapse",
-              backgroundColor: "white",
-              boxShadow: "0px 0px 10px rgba(0,0,0,0.1)"
-            }}
-          >
-
-            <thead
-              style={{
-                backgroundColor: "#1976d2",
-                color: "white"
-              }}
-            >
-
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Image</th>
-                <th>Phone No</th>
-                <th>Address</th>
-                <th>Role</th>
-                <th>Actions</th>
-              </tr>
-
-            </thead>
-
-            <tbody>
-
-              {
-                employees.map((emp) => (
-
-                  <tr
-                    key={emp.id}
-                    style={{
-                      textAlign: "center"
-                    }}
-                  >
-
-                    <td>{emp.id}</td>
-
-                    <td>{emp.name}</td>
-
-                    <td>{emp.email}</td>
-
-                    <td>
-
-                      <img
-                        src={
-                          emp.imgUrl && emp.imgUrl !== "no-image"
-                            ? emp.imgUrl
-                            : "https://cdn-icons-png.flaticon.com/512/149/149071.png"
-                        }
-                        alt="employee"
-                        width="70"
-                        height="70"
-                        style={{
-                          borderRadius: "50%",
-                          objectFit: "cover"
-                        }}
-                      />
-
+      {loading ? (
+        <div style={{ textAlign: "center", padding: "3rem", color: "var(--text-secondary)" }}>
+          Loading Employees...
+        </div>
+      ) : (
+        <div style={{ background: "var(--bg-secondary)", borderRadius: "var(--radius-lg)", boxShadow: "var(--shadow-sm)", overflow: "hidden", border: "1px solid var(--border-color)" }}>
+          <div style={{ overflowX: "auto" }}>
+            <table style={{ width: "100%", borderCollapse: "collapse", textAlign: "left" }}>
+              <thead style={{ backgroundColor: "var(--bg-primary)", borderBottom: "1px solid var(--border-color)" }}>
+                <tr>
+                  <th style={{ padding: "1rem", fontWeight: "600", color: "var(--text-secondary)", fontSize: "0.875rem" }}>ID</th>
+                  <th style={{ padding: "1rem", fontWeight: "600", color: "var(--text-secondary)", fontSize: "0.875rem" }}>Employee</th>
+                  <th style={{ padding: "1rem", fontWeight: "600", color: "var(--text-secondary)", fontSize: "0.875rem" }}>Contact</th>
+                  <th style={{ padding: "1rem", fontWeight: "600", color: "var(--text-secondary)", fontSize: "0.875rem" }}>Role</th>
+                  <th style={{ padding: "1rem", fontWeight: "600", color: "var(--text-secondary)", fontSize: "0.875rem", textAlign: "right" }}>Actions</th>
+                </tr>
+              </thead>
+              <tbody style={{ divideY: "1px solid var(--border-color)" }}>
+                {employees.map((emp) => (
+                  <tr key={emp.id} style={{ borderBottom: "1px solid var(--border-color)", transition: "background-color 0.2s" }} onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'var(--bg-primary)'} onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}>
+                    <td style={{ padding: "1rem", fontSize: "0.875rem", color: "var(--text-secondary)" }}>#{emp.id}</td>
+                    <td style={{ padding: "1rem" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+                        <img
+                          src={emp.imgUrl && emp.imgUrl !== "no-image" ? emp.imgUrl : "https://cdn-icons-png.flaticon.com/512/149/149071.png"}
+                          alt={emp.name}
+                          style={{ width: "40px", height: "40px", borderRadius: "50%", objectFit: "cover", border: "1px solid var(--border-color)" }}
+                        />
+                        <div>
+                          <div style={{ fontWeight: "500", color: "var(--text-primary)" }}>{emp.name}</div>
+                          <div style={{ fontSize: "0.875rem", color: "var(--text-secondary)" }}>{emp.email}</div>
+                        </div>
+                      </div>
                     </td>
-
-                    <td>{emp.phoneNumber}</td>
-
-                    <td>{emp.address}</td>
-
-                    <td>{emp.role}</td>
-
-                    <td>
-
-                      <button
-                        onClick={() => deleteEmployee(emp.eid)}
-                        style={{
-                          backgroundColor: "red",
-                          color: "white",
-                          border: "none",
-                          padding: "10px",
-                          borderRadius: "5px",
-                          cursor: "pointer",
-                          fontWeight: "bold"
-                        }}
-                      >
-                        Delete
-                      </button>
-
-                      <button
-                        onClick={() => navigate(`/update/${emp.eid}`)}
-                        style={{
-                          backgroundColor: "#1976d2",
-                          color: "white",
-                          border: "none",
-                          padding: "10px",
-                          borderRadius: "5px",
-                          cursor: "pointer",
-                          marginLeft: "10px",
-                          fontWeight: "bold"
-                        }}
-                      >
-                        Update
-                      </button>
-
+                    <td style={{ padding: "1rem" }}>
+                      <div style={{ fontSize: "0.875rem", color: "var(--text-primary)" }}>{emp.phoneNumber}</div>
+                      <div style={{ fontSize: "0.75rem", color: "var(--text-secondary)" }}>{emp.address}</div>
                     </td>
-
+                    <td style={{ padding: "1rem" }}>
+                      <span style={{ padding: "0.25rem 0.75rem", borderRadius: "9999px", backgroundColor: "#e0e7ff", color: "#4338ca", fontSize: "0.75rem", fontWeight: "500" }}>
+                        {emp.role}
+                      </span>
+                    </td>
+                    <td style={{ padding: "1rem", textAlign: "right" }}>
+                      <div style={{ display: "flex", justifyContent: "flex-end", gap: "0.5rem" }}>
+                        <button className="btn btn-outline" style={{ padding: "0.5rem 1rem" }} onClick={() => navigate(`/update/${emp.eid}`)}>
+                          Edit
+                        </button>
+                        <button className="btn btn-danger" style={{ padding: "0.5rem 1rem" }} onClick={() => deleteEmployee(emp.eid)}>
+                          Delete
+                        </button>
+                      </div>
+                    </td>
                   </tr>
-
-                ))
-              }
-
-            </tbody>
-
-          </table>
-
-        )
-      }
-
+                ))}
+                {employees.length === 0 && (
+                  <tr>
+                    <td colSpan="5" style={{ padding: "3rem", textAlign: "center", color: "var(--text-secondary)" }}>No employees found.</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

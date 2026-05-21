@@ -1,106 +1,83 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const AddEmployee = () => {
+  const navigate = useNavigate();
 
   const [name, setname] = useState("");
   const [email, setemail] = useState("");
   const [phone, setphone] = useState("");
   const [address, setaddress] = useState("");
   const [role, setrole] = useState("");
-  const [file, setfile] = useState(null);
 
   const handlesubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  try {
-    const formData = new FormData();
+    try {
+      const formData = new FormData();
 
-    formData.append("name", name);
-    formData.append("email", email);
-    formData.append("phone", phone);
-    formData.append("address", address);
-    formData.append("role", role);
+      formData.append("name", name);
+      formData.append("email", email);
+      formData.append("phone", phone);
+      formData.append("address", address);
+      formData.append("role", role);
 
-    if (file) {
-      formData.append("fi", file);
+      const res = await axios.post(
+        "http://localhost:9091/employee/addempl",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      console.log(res.data);
+      alert("Employee Added Successfully");
+      navigate("/employee/getempls");
+
+    } catch (err) {
+      console.log(err.response || err);
+      alert("Error adding employee");
     }
+  };
 
-    const res = await axios.post(
-      "http://localhost:9091/employee/addempl",
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
-
-    console.log(res.data);
-    alert("Employee Added Successfully");
-
-  } catch (err) {
-    console.log(err.response || err);
-    alert("Error adding employee");
-  }
-};
   return (
-    <div style={{ padding: "20px" }}>
-      <h2>Add Employee</h2>
-
-      <form onSubmit={handlesubmit}>
-
-        <input
-          type="text"
-          placeholder="Name"
-          value={name}
-          onChange={(e) => setname(e.target.value)}
-        />
-        <br /><br />
-
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setemail(e.target.value)}
-        />
-        <br /><br />
-
-        <input
-          type="text"
-          placeholder="Phone"
-          value={phone}
-          onChange={(e) => setphone(e.target.value)}
-        />
-        <br /><br />
-
-        <input
-          type="text"
-          placeholder="Address"
-          value={address}
-          onChange={(e) => setaddress(e.target.value)}
-        />
-        <br /><br />
-
-        <input
-          type="text"
-          placeholder="Role"
-          value={role}
-          onChange={(e) => setrole(e.target.value)}
-        />
-        <br /><br />
-
-        <input
-          type="file"
-          onChange={(e) => setfile(e.target.files[0])}
-        />
-        <br /><br />
-
-        <button type="submit">
-          Add Employee
-        </button>
-
-      </form>
+    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "100vh", backgroundColor: "var(--bg-primary)" }}>
+      <div style={{ background: "var(--bg-secondary)", padding: "2.5rem 2rem", borderRadius: "var(--radius-lg)", width: "100%", maxWidth: "450px", boxShadow: "var(--shadow-md)", border: "1px solid var(--border-color)" }}>
+        <h2 style={{ textAlign: "center", marginBottom: "2rem", color: "var(--text-primary)", fontWeight: "700", fontSize: "1.5rem" }}>Add Employee</h2>
+        <form onSubmit={handlesubmit}>
+          <div style={{ marginBottom: "1.25rem" }}>
+            <label className="form-label">Name</label>
+            <input className="form-input" type="text" placeholder="John Doe" value={name} onChange={(e) => setname(e.target.value)} required />
+          </div>
+          <div style={{ marginBottom: "1.25rem" }}>
+            <label className="form-label">Email</label>
+            <input className="form-input" type="email" placeholder="john@example.com" value={email} onChange={(e) => setemail(e.target.value)} required />
+          </div>
+          <div style={{ marginBottom: "1.25rem" }}>
+            <label className="form-label">Phone</label>
+            <input className="form-input" type="text" placeholder="+1 234 567 890" value={phone} onChange={(e) => setphone(e.target.value)} required />
+          </div>
+          <div style={{ marginBottom: "1.25rem" }}>
+            <label className="form-label">Address</label>
+            <input className="form-input" type="text" placeholder="123 Main St" value={address} onChange={(e) => setaddress(e.target.value)} required />
+          </div>
+          <div style={{ marginBottom: "1.5rem" }}>
+            <label className="form-label">Role</label>
+            <input className="form-input" type="text" placeholder="Software Engineer" value={role} onChange={(e) => setrole(e.target.value)} required />
+          </div>
+          <div style={{ display: "flex", gap: "1rem" }}>
+            <button type="button" className="btn btn-outline" style={{ flex: 1 }} onClick={() => navigate("/employee/getempls")}>
+              Cancel
+            </button>
+            <button type="submit" className="btn btn-primary" style={{ flex: 1 }}>
+              Add Employee
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

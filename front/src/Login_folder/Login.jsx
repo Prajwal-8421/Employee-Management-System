@@ -33,25 +33,29 @@ Navigate("/employee/getempls");
         <h2>Login</h2>
 
         <div className="input-group">
-          <label>Email</label>
+          <label className="form-label">Email</label>
           <input
+            className="form-input"
             type="email"
             value={email}
             onChange={(e)=>setemail(e.target.value)}
+            placeholder="admin@gmail.com"
           />
         </div>
 
         <div className="input-group">
-          <label>Password</label>
+          <label className="form-label">Password</label>
           <input
+            className="form-input"
             type="password"
             value={password}
             onChange={(e)=>setpassword(e.target.value)}
+            placeholder="••••••••"
           />
         </div>
 
-        <button type="submit">
-          Login
+        <button type="submit" className="btn btn-primary" style={{width: '100%'}}>
+          Sign In
         </button>
       </form>
     </div>

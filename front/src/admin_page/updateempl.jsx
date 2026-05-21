@@ -14,7 +14,6 @@ const UpdateEmployee = () => {
   const [phone, setphone] = useState("");
   const [address, setaddress] = useState("");
   const [role, setrole] = useState("");
-  const [file, setfile] = useState(null);
 
   useEffect(() => {
     getEmployee();
@@ -57,10 +56,6 @@ const UpdateEmployee = () => {
     formData.append("address", address);
     formData.append("role", role);
 
-    if (file) {
-      formData.append("fi", file);
-    }
-
     try {
 
       await axios.put(
@@ -87,122 +82,40 @@ const UpdateEmployee = () => {
   };
 
   return (
-
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-        backgroundColor: "#f1f5f9"
-      }}
-    >
-
-      <form
-        onSubmit={handlesubmit}
-        style={{
-          backgroundColor: "white",
-          padding: "40px",
-          borderRadius: "10px",
-          width: "400px",
-          boxShadow: "0px 0px 10px rgba(0,0,0,0.1)"
-        }}
-      >
-
-        <h1
-          style={{
-            textAlign: "center",
-            marginBottom: "20px"
-          }}
-        >
-          Update Employee
-        </h1>
-
-        <input
-          type="text"
-          placeholder="Name"
-          value={name}
-          onChange={(e) => setname(e.target.value)}
-          style={{
-            width: "100%",
-            padding: "12px",
-            marginBottom: "15px"
-          }}
-        />
-
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setemail(e.target.value)}
-          style={{
-            width: "100%",
-            padding: "12px",
-            marginBottom: "15px"
-          }}
-        />
-
-        <input
-          type="text"
-          placeholder="Phone"
-          value={phone}
-          onChange={(e) => setphone(e.target.value)}
-          style={{
-            width: "100%",
-            padding: "12px",
-            marginBottom: "15px"
-          }}
-        />
-
-        <input
-          type="text"
-          placeholder="Address"
-          value={address}
-          onChange={(e) => setaddress(e.target.value)}
-          style={{
-            width: "100%",
-            padding: "12px",
-            marginBottom: "15px"
-          }}
-        />
-
-        <input
-          type="text"
-          placeholder="Role"
-          value={role}
-          onChange={(e) => setrole(e.target.value)}
-          style={{
-            width: "100%",
-            padding: "12px",
-            marginBottom: "15px"
-          }}
-        />
-
-        <input
-          type="file"
-          onChange={(e) => setfile(e.target.files[0])}
-          style={{
-            marginBottom: "20px"
-          }}
-        />
-
-        <button
-          type="submit"
-          style={{
-            width: "100%",
-            padding: "12px",
-            backgroundColor: "#1976d2",
-            color: "white",
-            border: "none",
-            cursor: "pointer",
-            fontSize: "16px"
-          }}
-        >
-          Update Employee
-        </button>
-
-      </form>
-
+    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "100vh", backgroundColor: "var(--bg-primary)" }}>
+      <div style={{ background: "var(--bg-secondary)", padding: "2.5rem 2rem", borderRadius: "var(--radius-lg)", width: "100%", maxWidth: "450px", boxShadow: "var(--shadow-md)", border: "1px solid var(--border-color)" }}>
+        <h2 style={{ textAlign: "center", marginBottom: "2rem", color: "var(--text-primary)", fontWeight: "700", fontSize: "1.5rem" }}>Update Employee</h2>
+        <form onSubmit={handlesubmit}>
+          <div style={{ marginBottom: "1.25rem" }}>
+            <label className="form-label">Name</label>
+            <input className="form-input" type="text" placeholder="John Doe" value={name} onChange={(e) => setname(e.target.value)} required />
+          </div>
+          <div style={{ marginBottom: "1.25rem" }}>
+            <label className="form-label">Email</label>
+            <input className="form-input" type="email" placeholder="john@example.com" value={email} onChange={(e) => setemail(e.target.value)} required />
+          </div>
+          <div style={{ marginBottom: "1.25rem" }}>
+            <label className="form-label">Phone</label>
+            <input className="form-input" type="text" placeholder="+1 234 567 890" value={phone} onChange={(e) => setphone(e.target.value)} required />
+          </div>
+          <div style={{ marginBottom: "1.25rem" }}>
+            <label className="form-label">Address</label>
+            <input className="form-input" type="text" placeholder="123 Main St" value={address} onChange={(e) => setaddress(e.target.value)} required />
+          </div>
+          <div style={{ marginBottom: "1.5rem" }}>
+            <label className="form-label">Role</label>
+            <input className="form-input" type="text" placeholder="Software Engineer" value={role} onChange={(e) => setrole(e.target.value)} required />
+          </div>
+          <div style={{ display: "flex", gap: "1rem" }}>
+            <button type="button" className="btn btn-outline" style={{ flex: 1 }} onClick={() => navigate("/employee/getempls")}>
+              Cancel
+            </button>
+            <button type="submit" className="btn btn-primary" style={{ flex: 1 }}>
+              Update
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

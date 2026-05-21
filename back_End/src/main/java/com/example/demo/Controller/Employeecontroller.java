@@ -29,7 +29,7 @@ public class Employeecontroller {
     @PostMapping("/addempl")
     public ResponseEntity<?> addempl(
             @ModelAttribute Emplreq req,
-            @RequestParam("fi") MultipartFile fi
+            @RequestParam(value = "fi", required = false) MultipartFile fi
     ) throws Exception {
 
         serv.addempl(req, fi);
