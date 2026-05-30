@@ -1,6 +1,16 @@
 
 
 services:
+  db:
+    image: mysql:8.0
+    container_name: employee-db
+    environment:
+      MYSQL_DATABASE: employee_db
+      MYSQL_USER: dockeruser
+      MYSQL_PASSWORD: dockerpass
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
 
   backend:
     build:
@@ -10,6 +20,11 @@ services:
       - "9091:9091"
     environment:
       - SERVER_PORT=9091
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/employee_db?allowPublicKeyRetrieval=true&useSSL=false
+      - SPRING_DATASOURCE_USERNAME=dockeruser
+      - SPRING_DATASOURCE_PASSWORD=dockerpass
+    depends_on:
+      - db
 
   frontend:
     build:
