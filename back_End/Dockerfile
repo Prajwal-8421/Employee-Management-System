@@ -1,7 +1,7 @@
-FROM amazoncorretto:17
+FROM eclipse-temurin:17-jdk-alpine
 
 COPY target/*.jar app.jar
 
-EXPOSE 9091
+EXPOSE 8080
 
 ENTRYPOINT ["java","-jar","/app.jar"]
