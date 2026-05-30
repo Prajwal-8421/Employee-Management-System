@@ -31,7 +31,7 @@ const UpdateEmployee = () => {
 
       setname(res.data.name);
       setemail(res.data.email);
-      setphone(res.data.phone);
+      setphone(res.data.phoneno);
       setaddress(res.data.address);
       setrole(res.data.role);
 

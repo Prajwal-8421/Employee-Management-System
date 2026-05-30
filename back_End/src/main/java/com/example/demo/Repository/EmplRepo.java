@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface EmplRepo extends JpaRepository<Employee,Integer> {
+public interface EmplRepo extends JpaRepository<Employee,Long> {
     Optional<Employee> findByEid(String id);
     void deleteByEid(String id);
 
