@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import { addempl } from "../API'S_&_Protection/API";
 import { useNavigate } from "react-router-dom";
 
 const AddEmployee = () => {
@@ -23,15 +23,7 @@ const AddEmployee = () => {
       formData.append("address", address);
       formData.append("role", role);
 
-      const res = await axios.post(
-        "http://localhost:8080/employee/addempl",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const res = await addempl(formData);
 
       console.log(res.data);
       alert("Employee Added Successfully");

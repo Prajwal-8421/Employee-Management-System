@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { getAllemplo, delempl } from "../API'S_&_Protection/API";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -20,9 +20,7 @@ const EmployeeTable = () => {
 
       setLoading(true);
 
-      const res = await axios.get(
-        "http://localhost:8080/employee/getempls"
-      );
+      const res = await getAllemplo();
 
       console.log(res.data);
 
@@ -45,9 +43,7 @@ const EmployeeTable = () => {
 
     try {
 
-      await axios.delete(
-        `http://localhost:8080/employee/delete/${id}`
-      );
+      await delempl(id);
 
       toast.success("Employee Deleted Successfully");
 

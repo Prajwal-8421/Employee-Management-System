@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { getempl, update } from "../API'S_&_Protection/API";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -23,9 +23,7 @@ const UpdateEmployee = () => {
 
     try {
 
-      const res = await axios.get(
-        `http://localhost:8080/employee/getempl/${id}`
-      );
+      const res = await getempl(id);
 
       console.log(res.data);
 
@@ -58,15 +56,7 @@ const UpdateEmployee = () => {
 
     try {
 
-      await axios.put(
-        `http://localhost:8080/employee/update/${id}`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data"
-          }
-        }
-      );
+      await update(id, formData);
 
       toast.success("Employee Updated");
 
