@@ -21,7 +21,7 @@ const EmployeeTable = () => {
       setLoading(true);
 
       const res = await axios.get(
-        "http://localhost:9091/employee/getempls"
+        "http://localhost:8080/employee/getempls"
       );
 
       console.log(res.data);
@@ -46,7 +46,7 @@ const EmployeeTable = () => {
     try {
 
       await axios.delete(
-        `http://localhost:9091/employee/delete/${id}`
+        `http://localhost:8080/employee/delete/${id}`
       );
 
       toast.success("Employee Deleted Successfully");

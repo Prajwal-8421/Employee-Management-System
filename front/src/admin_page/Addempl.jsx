@@ -24,7 +24,7 @@ const AddEmployee = () => {
       formData.append("role", role);
 
       const res = await axios.post(
-        "http://localhost:9091/employee/addempl",
+        "http://localhost:8080/employee/addempl",
         formData,
         {
           headers: {

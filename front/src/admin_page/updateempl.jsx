@@ -24,7 +24,7 @@ const UpdateEmployee = () => {
     try {
 
       const res = await axios.get(
-        `http://localhost:9091/employee/getempl/${id}`
+        `http://localhost:8080/employee/getempl/${id}`
       );
 
       console.log(res.data);
@@ -59,7 +59,7 @@ const UpdateEmployee = () => {
     try {
 
       await axios.put(
-        `http://localhost:9091/employee/update/${id}`,
+        `http://localhost:8080/employee/update/${id}`,
         formData,
         {
           headers: {

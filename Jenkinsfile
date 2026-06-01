@@ -35,7 +35,7 @@ pipeline {
 
         stage('Run Backend Container') {
             steps {
-                sh 'docker run -d --name employee-backend -p 9091:8080 employee-backend-image'
+                sh 'docker run -d --name employee-backend -p 8080:8080 employee-backend-image'
             }
         }
 
